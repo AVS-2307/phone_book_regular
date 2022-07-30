@@ -12,8 +12,8 @@ def read_file(file_name):
 
 def get_number(contacts_list):
     number_pattern_raw = r'(\+7|8)(\s*)(\(*)(\d{3})(\)*)(\s*)' \
-                            r'(\-*)(\d{3})(\s*)(\-*)(\d{2})(\s*)(\-*)' \
-                            r'(\d{2})(\s*)(\(*)(доб)*(\.*)(\s*)(\d+)*(\)*)'
+                         r'(\-*)(\d{3})(\s*)(\-*)(\d{2})(\s*)(\-*)' \
+                         r'(\d{2})(\s*)(\(*)(доб)*(\.*)(\s*)(\d+)*(\)*)'
     number_pattern_new = r'+7(\4)\8-\11-\14\15\17\18\19\20'
     contacts_list_updated = list()
     for card in contacts_list:
