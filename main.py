@@ -1,5 +1,6 @@
 import re
 import csv
+# import pandas as pd
 
 
 def read_file(file_name):
@@ -38,6 +39,7 @@ def get_name(contacts_list):
 
 
 def join_duplicates(contacts_list):
+    contact_list = []
     for i in contacts_list:
         for j in contacts_list:
             if i[0] == j[0] and i[1] == j[1] and i is not j:
@@ -51,11 +53,11 @@ def join_duplicates(contacts_list):
                     i[5] = j[5]
                 if i[6] == '':
                     i[6] = j[6]
-    contacts_list_updated = list()
-    for card in contacts_list:
-        if card not in contacts_list_updated:
-            contacts_list_updated.append(card)
-    return contacts_list_updated
+
+            for card in contacts_list:
+                if card not in contact_list:
+                    contact_list.append(card)
+    return contact_list
 
 
 def write_file(contacts_list):
@@ -72,3 +74,5 @@ if __name__ == '__main__':
     contacts = join_duplicates(contacts)
     contacts[0][2] = 'patronymic'
     write_file(contacts)
+
+# pd.read_csv('phonebook_raw.csv', encoding='latin-1', header=None, error_bad_lines=False)
