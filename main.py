@@ -1,6 +1,6 @@
 import re
 import csv
-# import pandas as pd
+import pandas as pd
 
 
 def read_file(file_name):
@@ -39,7 +39,6 @@ def get_name(contacts_list):
 
 
 def join_duplicates(contacts_list):
-    contact_list = []
     for i in contacts_list:
         for j in contacts_list:
             if i[0] == j[0] and i[1] == j[1] and i is not j:
@@ -53,7 +52,7 @@ def join_duplicates(contacts_list):
                     i[5] = j[5]
                 if i[6] == '':
                     i[6] = j[6]
-
+            contact_list = []
             for card in contacts_list:
                 if card not in contact_list:
                     contact_list.append(card)
@@ -67,6 +66,13 @@ def write_file(contacts_list):
         print('Создание списка завершено успешно')
 
 
+def write_file_with_pandas(contacts_list):
+    header = ['lastname', 'firstname', 'patronymic', 'organization', 'position', 'phone', 'email']
+    df = pd.DataFrame(contacts_list, columns=header)
+    df.to_csv('phone_book_formatted_as_table.csv')
+    print('Создание списка в виде таблицы завершено успешно')
+
+
 if __name__ == '__main__':
     contacts = read_file('phonebook_raw.csv')
     contacts = get_number(contacts)
@@ -74,5 +80,6 @@ if __name__ == '__main__':
     contacts = join_duplicates(contacts)
     contacts[0][2] = 'patronymic'
     write_file(contacts)
+    write_file_with_pandas(contacts)
 
 # pd.read_csv('phonebook_raw.csv', encoding='latin-1', header=None, error_bad_lines=False)
