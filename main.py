@@ -66,11 +66,13 @@ def write_file(contacts_list):
         print('Создание списка завершено успешно')
 
 
-def write_file_with_pandas(contacts_list):
-    header = ['lastname', 'firstname', 'patronymic', 'organization', 'position', 'phone', 'email']
-    df = pd.DataFrame(contacts_list, columns=header)
-    df.to_csv('phone_book_formatted_as_table.csv')
-    print('Создание списка в виде таблицы завершено успешно')
+def remove_duplicates_pandas(contacts_list):
+    col_names = ['lastname', 'firstname', 'patronymic', 'organization', 'position', 'phone', 'email', 'Null']
+    contacts_list = pd.read_csv('phone_book_formatted.csv', encoding='cp1251', names=col_names)
+    contacts_list.drop_duplicates(subset=['lastname', 'firstname'], keep='first', inplace=True)
+    df = pd.DataFrame(contacts_list)
+    df.to_csv('phone_book_without_duplicates.csv')
+    print('Создание csv с помощью pandas без дублирующих записей завершено успешно')
 
 
 if __name__ == '__main__':
@@ -80,6 +82,6 @@ if __name__ == '__main__':
     contacts = join_duplicates(contacts)
     contacts[0][2] = 'patronymic'
     write_file(contacts)
-    write_file_with_pandas(contacts)
+    remove_duplicates_pandas(contacts)
 
 # pd.read_csv('phonebook_raw.csv', encoding='latin-1', header=None, error_bad_lines=False)
